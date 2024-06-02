@@ -1,10 +1,4 @@
-import {
-  Select,
-  SelectTrigger,
-  SelectItem,
-  SelectContent,
-  SelectValue,
-} from "./ui/select";
+import { Select } from "@mantine/core";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -15,41 +9,51 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Label } from "@radix-ui/react-label";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "./ui/table";
 import { useTimetable } from "@/context/TimetableProvider";
-import React from "react";
-
+import React, { useMemo, useState } from "react";
+import { useMantineReactTable, type MRT_ColumnDef } from "mantine-react-table";
+import { MantineReactTable } from "mantine-react-table";
 function Timetable() {
   const { timetable, courses, getCourses, getTimetable } = useTimetable();
 
-  const [body, setBody] = React.useState({
+  const [body, setBody] = useState({
     stream: "",
     course: "",
     semester: "",
   });
 
-  const [semester, setSemester] = React.useState<number[]>([]);
+  const [semester, setSemester] = useState<number[]>([]);
   const semesters = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"];
 
   React.useEffect(() => {
-    courses.map((course) => {
+    courses.forEach((course) => {
       if (course.course === body.course) {
-        return setSemester(course.semester);
+        setSemester(course.semester);
       }
     });
-  }, [body.course]);
+  }, [body.course, courses]);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     getTimetable(body.stream, body.course, body.semester);
   }
+
+  const columns = useMemo<MRT_ColumnDef<any>[]>(
+    () => [
+      { accessorKey: "allotedTime", header: "Time" },
+      { accessorKey: "day", header: "Day" },
+      { accessorKey: "subject", header: "Subject" },
+      { accessorKey: "allotedRoom?.roomNumber", header: "Room" },
+      { accessorKey: "teacher?.fullName", header: "Teacher" },
+      { accessorKey: "paperId", header: "Paper Id" },
+    ],
+    []
+  );
+
+  const table = useMantineReactTable({
+    columns,
+    data: timetable.classes,
+  });
 
   return (
     <section className="min-h-screen min-w-screen">
@@ -65,48 +69,33 @@ function Timetable() {
                 <Label htmlFor="stream">Select Stream</Label>
                 <Select
                   name="stream"
-                  onValueChange={(value: string) => {
+                  placeholder="Stream"
+                  data={[
+                    { value: "Arts", label: "Arts" },
+                    { value: "Science", label: "Science" },
+                    { value: "Commerce", label: "Commerce" },
+                  ]}
+                  onChange={(value) => {
                     getCourses(value);
                     setBody({ ...body, stream: value });
                   }}
-                >
-                  <SelectTrigger id="stream">
-                    <SelectValue placeholder="Stream" />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    <SelectItem value="Arts">Arts</SelectItem>
-                    <SelectItem value="Science">Science</SelectItem>
-                    <SelectItem value="Commerce">Commerce</SelectItem>
-                  </SelectContent>
-                </Select>
+                />
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="course">Select Course</Label>
                 <Select
                   name="course"
-                  onValueChange={(value: string) =>
-                    setBody({ ...body, course: value })
+                  placeholder="Select"
+                  data={
+                    courses.length
+                      ? courses.map((course) => ({
+                          value: course.course,
+                          label: course.course,
+                        }))
+                      : [{ value: "na", label: "No courses", disabled: true }]
                   }
-                >
-                  <SelectTrigger id="course">
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    {courses.length ? (
-                      courses.map((course, index) => {
-                        return (
-                          <SelectItem value={course.course} key={index}>
-                            {course.course}
-                          </SelectItem>
-                        );
-                      })
-                    ) : (
-                      <SelectItem value="na" disabled>
-                        No courses
-                      </SelectItem>
-                    )}
-                  </SelectContent>
-                </Select>
+                  onChange={(value) => setBody({ ...body, course: value })}
+                />
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="semester" className="flex flex-start">
@@ -114,27 +103,17 @@ function Timetable() {
                 </Label>
                 <Select
                   name="semester"
-                  onValueChange={(value: string) =>
-                    setBody({ ...body, semester: value })
+                  placeholder="Semester"
+                  data={
+                    semester.length
+                      ? semester.map((sem) => ({
+                          value: sem.toString(),
+                          label: semesters[sem - 1],
+                        }))
+                      : [{ value: "0", label: "No semester" }]
                   }
-                >
-                  <SelectTrigger id="semester">
-                    <SelectValue placeholder="Semester" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {semester.length ? (
-                      semester.map((sem, index) => {
-                        return (
-                          <SelectItem value={sem.toString()} key={index}>
-                            {semesters[sem - 1]}
-                          </SelectItem>
-                        );
-                      })
-                    ) : (
-                      <SelectItem value="0">No semester</SelectItem>
-                    )}
-                  </SelectContent>
-                </Select>
+                  onChange={(value) => setBody({ ...body, semester: value })}
+                />
               </div>
             </div>
           </CardContent>
@@ -145,43 +124,9 @@ function Timetable() {
           </CardFooter>
         </Card>
       </form>
-      <Table className="mx-auto md:w-5/6 w-full my-4 bg-zinc-100 dark:bg-zinc-900">
-        <TableHeader>
-          <TableRow className="hover:bg-zinc-200 dark:hover:bg-zinc-800">
-            <TableHead className="min-w-12">Time</TableHead>
-            <TableHead>Day</TableHead>
-            <TableHead>Subject</TableHead>
-            <TableHead>Room</TableHead>
-            <TableHead>Teacher</TableHead>
-            <TableHead>Paper Id</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {timetable.classes.length ? (
-            timetable.classes.map((cls, index) => {
-              return (
-                <TableRow
-                  key={index}
-                  className="w-full hover:bg-zinc-200 dark:hover:bg-zinc-800 min-w-20"
-                >
-                  <TableCell>
-                    {cls.allotedTime.split("-").join("AM - ")}PM
-                  </TableCell>
-                  <TableCell>{cls.day}</TableCell>
-                  <TableCell>{cls.subject}</TableCell>
-                  <TableCell>{cls.allotedRoom?.roomNumber}</TableCell>
-                  <TableCell>{cls.teacher?.fullName}</TableCell>
-                  <TableCell>{cls.paperId}</TableCell>
-                </TableRow>
-              );
-            })
-          ) : (
-            <TableRow className="w-full hover:bg-zinc-200 dark:hover:bg-zinc-800">
-              <TableCell colSpan={8}>No timetable</TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+      <div className="mx-auto md:w-5/6 w-full my-2 bg-neutral-700 dark:bg-zinc-900">
+        <MantineReactTable table={table} />
+      </div>
     </section>
   );
 }
