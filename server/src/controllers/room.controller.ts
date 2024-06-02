@@ -204,7 +204,7 @@ const updateRoom = asyncHandler(async (req: Request, res: Response) => {
   }
   return res
     .status(200)
-    .json(new ApiResponse(200, updatedRoom, "Room updated successfully"));
+    .json(new ApiResponse(200, {}, "Room updated successfully"));
 });
 
 export { addRooms, deleteRoom, getRooms, getVacantRooms, updateRoom };
