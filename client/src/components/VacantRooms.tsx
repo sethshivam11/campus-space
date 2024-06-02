@@ -1,13 +1,5 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { useRoom } from "@/context/RoomProvider";
-import React from "react";
+import React, { useMemo, useState, useEffect } from "react";
+import { useMantineReactTable, type MRT_ColumnDef } from "mantine-react-table";
 import {
   Select,
   SelectTrigger,
@@ -15,8 +7,9 @@ import {
   SelectContent,
   SelectValue,
 } from "./ui/select";
+import { useRoom } from "@/context/RoomProvider";
 import { useUser } from "@/context/UserProvider";
-
+import { MantineReactTable } from "mantine-react-table";
 export interface RoomInterface {
   id: string;
   roomNumber: string;
@@ -27,15 +20,38 @@ export interface RoomInterface {
 export function VacantRooms() {
   const { rooms, fetchVacantRooms, time: currentTime } = useRoom();
   const { timeslots } = useUser();
-  const [time, setTime] = React.useState("");
+  const [time, setTime] = useState("");
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTime(currentTime);
-  }, []);
+  }, [currentTime]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchVacantRooms(time);
-  }, [time]);
+  }, [time, fetchVacantRooms]);
+
+  const columns = useMemo<MRT_ColumnDef<RoomInterface>[]>(
+    () => [
+      {
+        accessorKey: "roomNumber",
+        header: "Room Number",
+      },
+      {
+        accessorKey: "capacity",
+        header: "Capacity",
+      },
+      {
+        accessorKey: "location",
+        header: "Location",
+      },
+    ],
+    []
+  );
+
+  const table = useMantineReactTable({
+    columns,
+    data: rooms,
+  });
 
   return (
     <section className="min-h-screen">
@@ -57,43 +73,17 @@ export function VacantRooms() {
             />
           </SelectTrigger>
           <SelectContent position="popper">
-            {timeslots.map((timeslot: string, index) => {
-              return (
-                <SelectItem value={timeslot} key={index}>
-                  {timeslot.split("-")?.join(" to ")}
-                </SelectItem>
-              );
-            })}
+            {timeslots.map((timeslot: string, index) => (
+              <SelectItem value={timeslot} key={index}>
+                {timeslot.split("-")?.join(" to ")}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </p>
-      <Table className="mx-auto md:w-3/5 w-4/5 mb-6 bg-zinc-100 dark:bg-zinc-900">
-        <TableHeader>
-          <TableRow className="w-full hover:bg-zinc-200 dark:hover:bg-zinc-800">
-            <TableHead>Room Number</TableHead>
-            <TableHead>Capacity</TableHead>
-            <TableHead>Location</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {rooms.length ? (
-            rooms.map((room, index) => (
-              <TableRow
-                key={index}
-                className="w-full hover:bg-zinc-200 dark:hover:bg-zinc-800"
-              >
-                <TableCell>{room.roomNumber}</TableCell>
-                <TableCell>{room.capacity}</TableCell>
-                <TableCell>{room.location}</TableCell>
-              </TableRow>
-            ))
-          ) : (
-            <TableRow className="w-full hover:bg-zinc-200 dark:hover:bg-zinc-800">
-              <TableCell colSpan={3}>No rooms</TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+      <div className="mx-auto md:w-3/5 w-4/5 mb-6 bg-neutral-800 text-white">
+        <MantineReactTable table={table} />
+      </div>
       {time === "closed" && (
         <p className="text-red-600 text-xl font-bold animate-pulse text-center">
           College is closed
@@ -102,3 +92,5 @@ export function VacantRooms() {
     </section>
   );
 }
+
+export default VacantRooms;
