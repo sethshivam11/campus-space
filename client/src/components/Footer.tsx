@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg"; 
 import { Copyright, Github, Linkedin } from "lucide-react";
-
 function Footer() {
     const name = import.meta.env.VITE_COLLEGE_NAME;
     const twitterLink = import.meta.env.VITE_TWITTER;
