@@ -14,6 +14,7 @@ import AddRoom from "./components/AddRoom";
 import { Toaster } from "./components/ui/sonner";
 import { useTheme } from "./context/ThemeProvider";
 import { BookRoom } from "./components/BookRoom";
+import Signup from "./components/SignUp";
 
 function App() {
   const { theme } = useTheme();
@@ -23,6 +24,7 @@ function App() {
       <Toaster richColors theme={theme} />
       <Routes>
         <Route element={<Login />} path="/login" />
+       <Route element={<Signup />} path="/signup" />   {/*added signup path */}
         <Route element={<TimetableAdmin />} path="/admin/timetable" />
         <Route element={<TeachersAbsentAdmin />} path="/admin/teachersabsent" />
         <Route element={<TeacherRegister />} path="/admin/register" />

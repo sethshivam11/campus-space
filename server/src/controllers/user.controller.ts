@@ -40,16 +40,8 @@ const getTeachers = asyncHandler(async (req: Request, res: Response) => {
 });
 
 const registerUser = asyncHandler(async (req: Request, res: Response) => {
-  if (!req.user) {
-    throw new ApiError(401, "User not verified");
-  }
-
-  const { isAdmin } = req.user;
-  if (!isAdmin) {
-    throw new ApiError(403, "User not authorized");
-  }
-
   const { fullName, email, password } = req.body;
+
   if (!fullName || !email || !password) {
     throw new ApiError(400, "All fields are required");
   }
@@ -66,7 +58,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
   });
 
   if (!user) {
-    throw new ApiError(400, "Something went wrong, while registering the user");
+    throw new ApiError(400, "Something went wrong while registering the user");
   }
 
   user.password = "";
@@ -76,15 +68,12 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
   return res
     .status(201)
     .json(
-      new ApiResponse(
-        201,
-        { user, accessToken },
-        "User registered successfully"
-      )
+      new ApiResponse(201, { user, accessToken }, "User registered successfully")
     );
 });
 
 const loginUser = asyncHandler(async (req: Request, res: Response) => {
+  console.log("login:",req.body)
   const { email, password } = req.body;
   if (!email || !password) {
     throw new ApiError(400, "All fields are required");

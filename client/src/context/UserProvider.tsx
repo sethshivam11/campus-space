@@ -32,6 +32,7 @@ interface Context {
   changeAdmin: Function;
   getAllTeachers: Function;
   registerTeacher: Function;
+  registerUser: (fullName: string, email: string, password: string) => Promise<void>;
 }
 
 const initialState = {
@@ -61,6 +62,7 @@ const initialState = {
   changeAdmin: () => {},
   getAllTeachers: () => {},
   registerTeacher: () => {},
+  registerUser: async () => {},
 };
 
 const UserContext = React.createContext<Context>(initialState);
@@ -285,71 +287,31 @@ export function UserProvider({ children }: React.PropsWithChildren<{}>) {
       .finally(() => setLoading(false));
   }
 
-  async function getTeachersAbsent() {
-    interface TeacherInterface {
-      fullName: string;
-      email: string;
-      _id: string;
-    }
-    setLoading(true);
-    axios
-      .get("/api/v1/teachersabsent", {
-        params: {
-          day,
-        },
-      })
-      .then((res) => {
-        if (res.data.success) {
-          setTeachersAbsent(
-            res.data.data
-              .map(
-                (teacher: {
-                  teacher: TeacherInterface;
-                }) => {
-                  return teacher.teacher;
-                }
-              )
-              .sort((teacher1: TeacherInterface, teacher2: TeacherInterface) =>
-                teacher1.fullName.localeCompare(teacher2.fullName)
-              )
-          );
-        }
-      })
-      .catch((err) => console.warn(err.message))
-      .finally(() => setLoading(false));
-  }
-
-  async function addTeachersAbsent(teacherIds: string[]) {
+  async function registerUser(
+    fullName: string,
+    email: string,
+    password: string
+  ) {
     const toastLoading = toast.loading("Please wait...");
     setLoading(true);
+    
     axios
       .post(
-        "/api/v1/teachersabsent/new",
-        { teachers: teacherIds, day },
+        "/api/v1/users/register",
         {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          fullName,
+          email,
+          password,
         }
       )
       .then((res) => {
         if (res.data.success) {
-          setTeachersAbsent([
-            ...teachersAbsent,
-            ...res.data.data.map(
-              (teacher: {
-                teacher: { fullName: string; email: string; _id: string };
-              }) => {
-                return teacher.teacher;
-              }
-            ),
-          ]);
-          setTeachers(
-            teachers.filter((teacher) => !teacherIds.includes(teacher._id))
-          );
-          toast.success("Absent teacher added successfully", {
-            id: toastLoading,
-          });
+          localStorage.setItem(tokenKey, res.data.data.accessToken);
+          setUser(res.data.data.user);
+          accessToken = res.data.data.accessToken;
+          navigate("/bookroom"); // Assuming the user is redirected to the bookroom after signup
+          fetchUser();
+          toast.success("Registered successfully", { id: toastLoading });
         }
       })
       .catch((err) =>
@@ -360,41 +322,120 @@ export function UserProvider({ children }: React.PropsWithChildren<{}>) {
       .finally(() => setLoading(false));
   }
 
-  React.useEffect(() => {
-    if (location.pathname.includes("/admin")) {
-      if (!accessToken) navigate("/login");
-      fetchUser();
+
+   
+    async function getTeachersAbsent() {
+      interface TeacherInterface {
+        fullName: string;
+        email: string;
+        _id: string;
+      }
+      setLoading(true);
+      axios
+        .get("/api/v1/teachersabsent", {
+          params: {
+            day,
+          },
+        })
+        .then((res) => {
+          if (res.data.success) {
+            setTeachersAbsent(
+              res.data.data
+                .map(
+                  (teacher: {
+                    teacher: TeacherInterface;
+                  }) => {
+                    return teacher.teacher;
+                  }
+                )
+                .sort((teacher1: TeacherInterface, teacher2: TeacherInterface) =>
+                  teacher1.fullName.localeCompare(teacher2.fullName)
+                )
+            );
+          }
+        })
+        .catch((err) => console.warn(err.message))
+        .finally(() => setLoading(false));
     }
-  }, [accessToken]);
-
-  return (
-    <UserContext.Provider
-      value={{
-        day,
-        days,
-        timeslots,
-        user,
-        teachers,
-        accessToken,
-        teachersAbsent,
-        loading,
-        tokenKey,
-        setLoading,
-        setTeachers,
-        getTeachersAbsent,
-        addTeachersAbsent,
-        setUser,
-        fetchUser,
-        loginUser,
-        deleteUser,
-        changeAdmin,
-        getAllTeachers,
-        registerTeacher,
-      }}
-    >
-      {children}
-    </UserContext.Provider>
-  );
-}
-
-export const useUser = () => React.useContext(UserContext);
+  
+    async function addTeachersAbsent(teacherIds: string[]) {
+      const toastLoading = toast.loading("Please wait...");
+      setLoading(true);
+      axios
+        .post(
+          "/api/v1/teachersabsent/new",
+          { teachers: teacherIds, day },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        )
+        .then((res) => {
+          if (res.data.success) {
+            setTeachersAbsent([
+              ...teachersAbsent,
+              ...res.data.data.map(
+                (teacher: {
+                  teacher: { fullName: string; email: string; _id: string };
+                }) => {
+                  return teacher.teacher;
+                }
+              ),
+            ]);
+            setTeachers(
+              teachers.filter((teacher) => !teacherIds.includes(teacher._id))
+            );
+            toast.success("Absent teacher added successfully", {
+              id: toastLoading,
+            });
+          }
+        })
+        .catch((err) =>
+          toast.error(err.response.data.message || "Something broke!", {
+            id: toastLoading,
+          })
+        )
+        .finally(() => setLoading(false));
+    }
+  
+    React.useEffect(() => {
+      if (location.pathname.includes("/admin")) {
+        if (!accessToken) navigate("/login");
+        fetchUser();
+      }
+    }, [accessToken]);
+  
+    return (
+      <UserContext.Provider
+        value={{
+          day,
+          days,
+          timeslots,
+          user,
+          teachers,
+          accessToken,
+          teachersAbsent,
+          loading,
+          tokenKey,
+          setLoading,
+          setTeachers,
+          getTeachersAbsent,
+          addTeachersAbsent,
+          setUser,
+          fetchUser,
+          loginUser,
+          deleteUser,
+          changeAdmin,
+          getAllTeachers,
+          registerTeacher,
+          registerUser,
+        }}
+      >
+        {children}
+      </UserContext.Provider>
+    );
+  }
+  
+  export const useUser = () => React.useContext(UserContext);
+  

@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import errorHandler from "./src/middlewares/error.middleware";
 import { UserInterface } from "./src/models/user.model";
 import path from "path";
-
+const cors = require("cors");
 const app = express();
 
 declare module "express" {
@@ -15,6 +15,8 @@ app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 app.use(express.static("public"));
 
+app.use(cors()); // Enable CORS for all routes
+app.use(express.json());
 import userRouter from "./src/routes/user.route";
 import timtableRouter from "./src/routes/timetable.route";
 import teachersAbsentRouter from "./src/routes/teachersabsent.route";

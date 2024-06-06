@@ -15,9 +15,9 @@ router.route("/").get(getTeachers);
 
 router.route("/login").post(loginUser);
 
-router.route("/get").get(verifyJWT, getCurrentUser)
+router.route("/get").get(verifyJWT, getCurrentUser);
 
-router.route("/register").post(verifyJWT, registerUser);
+router.route("/register").post(registerUser); // No verifyJWT middleware here
 
 router.route("/admin/:teacherId").patch(verifyJWT, changeAdmin);
 

@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardTitle,
-  CardHeader,
-} from "./ui/card";
+import { Card, CardContent, CardFooter, CardTitle, CardHeader } from "./ui/card";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Link, useNavigate } from "react-router-dom";
@@ -13,26 +7,31 @@ import { Label } from "@radix-ui/react-label";
 import { useUser } from "@/context/UserProvider";
 import { CheckboxDemo } from "./CheckboxDemo";
 
-function Login() {
-  const { loginUser, loading, user } = useUser();
+function Signup() {
+  const { registerUser, loading, user } = useUser();
   const navigate = useNavigate();
-  const [creds, setCreds] = React.useState({ email: "", password: "" });
+  const [creds, setCreds] = React.useState({ fullName: "", email: "", password: "", confirmPassword: "" });
   const [showPwd, setShowPwd] = React.useState(false);
+  const [error, setError] = React.useState("");
 
   React.useEffect(() => {
-    if (user._id) {
+    if (user?._id) {
       if (user.isAdmin) {
         navigate("/admin/teachersabsent");
-      }
-      else {
+      } else {
         navigate("/bookroom");
       }
     }
-  }, [user]);
+  }, [user, navigate]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    await loginUser(creds.email, creds.password);
+    if (creds.password !== creds.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+    setError("");
+    await registerUser(creds.fullName, creds.email, creds.password);
   }
 
   return (
@@ -40,9 +39,20 @@ function Login() {
       <form onSubmit={handleSubmit} className="space-y-3">
         <Card className="lg:w-2/5 sm:w-3/5 w-4/5 mx-auto dark:bg-card bg-zinc-100 mt-8">
           <CardHeader>
-            <CardTitle className="text-2xl text-center">Login</CardTitle>
+            <CardTitle className="text-2xl text-center">Sign Up</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
+            <div className="space-y-1">
+              <Label htmlFor="fullName">Name</Label>
+              <Input
+                id="fullName"
+                placeholder="Name"
+                type="text"
+                value={creds.fullName}
+                autoComplete="name"
+                onChange={(e) => setCreds({ ...creds, fullName: e.target.value })}
+              />
+            </div>
             <div className="space-y-1">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -61,10 +71,21 @@ function Login() {
                 placeholder="Password"
                 type={showPwd ? "text" : "password"}
                 value={creds.password}
-                onChange={(e) =>
-                  setCreds({ ...creds, password: e.target.value })
-                }
+                onChange={(e) => setCreds({ ...creds, password: e.target.value })}
               />
+            </div>
+            <div className="space-y-1">
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Input
+                id="confirmPassword"
+                placeholder="Confirm Password"
+                type={showPwd ? "text" : "password"}
+                value={creds.confirmPassword}
+                onChange={(e) => setCreds({ ...creds, confirmPassword: e.target.value })}
+              />
+               <div>
+              <p>Already have a Account?<Link to='/signin' style={{color:"blue"}}>&nbsp; Sign In</Link></p>
+            </div>
               <CheckboxDemo
                 text="Show Password"
                 value={"showpwd"}
@@ -72,19 +93,17 @@ function Login() {
                 handleChange={() => setShowPwd(!showPwd)}
               />
             </div>
-            <div>
-              <p>Don't have a Account?<Link to='/signup' style={{color:"blue"}}>&nbsp; Sign Up</Link></p>
-            </div>
+            {error && <p className="text-red-500">{error}</p>}
           </CardContent>
           <CardFooter className="flex justify-evenly">
             <Button
               type="submit"
               size="lg"
               disabled={
-                loading || creds.email.length < 5 || creds.password.length < 6
+                loading || !creds.email || !creds.password || !creds.confirmPassword
               }
             >
-              Login
+              Sign Up
             </Button>
             <Button
               variant="outline"
@@ -102,4 +121,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;
