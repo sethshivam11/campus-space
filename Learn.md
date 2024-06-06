@@ -149,7 +149,7 @@ To run this project, you will need to add the following environment variables to
 ![image](https://github.com/debangi29/campus-space/assets/117537653/8475b490-0159-4e28-b052-92d749526227)
 
 
-### 3. There are more features, ways to connect.
+### 3. There are more features and various ways to connect.
 <br>
 
 ## **Contributions are welcome!. You can suggest features to add, report any possible bug that might crept in, ideas and changes! 🚀**
