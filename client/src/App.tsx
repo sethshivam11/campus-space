@@ -14,7 +14,7 @@ import AddRoom from "./components/AddRoom";
 import { Toaster } from "./components/ui/sonner";
 import { useTheme } from "./context/ThemeProvider";
 import { BookRoom } from "./components/BookRoom";
-
+import LandingPage from "./components/LandingPage";
 function App() {
   const { theme } = useTheme();
   return (
@@ -30,7 +30,8 @@ function App() {
         <Route element={<BookRoom />} path="/bookroom" />
 
         <Route element={<Timetable />} path="/timetable" />
-        <Route element={<VacantRooms />} path="/" />
+        <Route element={<VacantRooms />} path="/available-rooms" />
+        <Route element={<LandingPage />} path="/" />
         <Route element={<TeachersAbsent />} path="/teachersabsent" />
 
         <Route element={<ErrorPage />} path="/*" />

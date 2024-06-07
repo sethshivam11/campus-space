@@ -66,7 +66,7 @@ function Navbar() {
           <li>
             <Button
               variant="ghost"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/available-rooms")}
               className="hidden md:flex dark:hover:bg-zinc-700"
             >
               Vacant Rooms
