@@ -1,27 +1,26 @@
 # Learn.md ✍
-# Campus-Space 🌍
+# Campus-Space 🖥️
 Campus Space is a MERN stack project with TypeScript & Tailwind CSS. Admins manage timetables, teacher absences, & rooms. Students & teachers view timetables, vacant rooms, & teacher absences. Teachers can book rooms for classes. Efficient college resource management.
+![image](https://github.com/debangi29/campus-space/assets/117537653/1daa0a8c-5f04-48f8-ae6b-8909e5464a70)
+
 
 # Table of Contents 
-1. [Introduction](#introduction-)
-2. [Tech Stack](#tech-stack-)
-3. [Contributing](#contributing-)
+1. [Tech Stack](#tech-stack)
+2. [Contributing](#contributing-)
    - [Development Workflow](#development-workflow)
    - [Issue Report Process](#issue-report-process)
    - [Pull Request Process](#pull-request-process-)
-4. [Setting Up on your machine](#setting-up-on-your-machine-)
-5. [Usage](#usage)
-6. [Resources for Beginners](#resources-for-beginners-)
+3. [Setting Up on your machine](#setting-up-on-your-machine)
+4. [Usage](#usage)
+5. [Resources for Beginners](#resources-for-beginners-)
    - [Basics of Git and GitHub](#basics-of-git-and-github-)
-7. [Documentation](#documentation-)
-8. [Code Reviews](#code-reviews-)
-9. [Feature Requests](#feature-requests-)
-10. [Spreading the Word](#spreading-the-word-)
+6. [Documentation](#documentation)
+7. [Code Reviews](#code-reviews-)
+8. [Feature Requests](#feature-requests-)
+9. [Spreading the Word](#spreading-the-word-)
 
-## Introduction 🖥️
-Campus Space is a MERN stack project with TypeScript & Tailwind CSS. Admins manage timetables, teacher absences, & rooms. Students & teachers view timetables, vacant rooms, & teacher absences. Teachers can book rooms for classes. Efficient college resource management.
 
-## Tech Stack 🗃️
+## Tech Stack
 
 - MERN Stack
 - Tailwind CSS
@@ -83,7 +82,7 @@ git commit -m "Describe your changes"
 4. Add screenshot it help in review.
 5. Submit your PR by giving the necesarry information in PR template and hang tight we will review it really soon.
 
-# Setting Up on your machine ⚙️
+# Setting Up on your machine
 
 Follow these steps to set up the project locally:
 
@@ -163,7 +162,7 @@ To run this project, you will need to add the following environment variables to
 - [Learn GitHub from Scratch](https://www.youtube.com/watch?v=w3jLJU7DT5E)
 
 
-## 📍Documentation
+## Documentation
 - Document any significant changes or additions to the codebase.
 - Provide clear explanations of the functionality, usage, and any relevant considerations.
 
