@@ -2,6 +2,8 @@
 # Campus-Space 🌍
 Campus Space is a MERN stack project with TypeScript & Tailwind CSS. Admins manage timetables, teacher absences, & rooms. Students & teachers view timetables, vacant rooms, & teacher absences. Teachers can book rooms for classes. Efficient college resource management.
 
+# Demo Video
+<video controls src="campus-space.mp4" title="Demo Video"></video>
 # Table of Contents 
 1. [Introduction](#introduction-)
 2. [Tech Stack](#tech-stack-)
