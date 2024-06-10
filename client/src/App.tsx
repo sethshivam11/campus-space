@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import {Routes, Route } from "react-router-dom";
 import TimetableAdmin from "./components/TimetableAdmin";
 import Navbar from "./components/Navbar";
 import { VacantRooms } from "./components/VacantRooms";
