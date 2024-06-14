@@ -19,44 +19,25 @@ const LandingPage = () => {
         window.scrollTo(0, 0);
       }, [pathname]);
 
+
       useLayoutEffect(() => {
         
-        let control = gsap.context(() => {
-            const t1 = gsap.timeline()
-          t1.from('#intro-slider', {
-            yPercent: '100',
-            duration: 1.3,
-            delay: 0.6,
-          })
-         .to("#intro-slider", {
-            opacity: 0,
-            xPercent: "-100",
-            duration: 1,
-            ontextReflete: () => {
-              gsap.set(['#intro-slider', '.title-1'], { display: 'none' })
-            }
-          })
-        
-          t1.add(
-            gsap.to("#item",{        
-                 scrollTrigger:{
-                  start:'top 40%',
-               scrub:1,
-               
-               },
-               opacity:0,
-          }))
-        
+
+          const t1 = gsap.timeline()
+          t1.from("#left-text",{
+            opacity:0,
+            scrollTrigger:{
+              trigger:'#item',
+              start:'center 40%', 
+              // markers:true,
+            scrub:2,
+             pin:true,  
+            },
+            duration:1,
           
-        }, textRef)
-
-        return () => control.revert()
-    },[])
-
-   
-   
-
-
+          })
+      },[])
+      
     const content = [
         {
         
@@ -91,22 +72,19 @@ const LandingPage = () => {
  return (
    
     <div  ref={textRef}>
-       
-  
-    <div id='intro-slider' 
-    className='h-screen p-10 '>
-   
-   <h1  id='title-1'
-   className='text-xl font-bold md:text-6xl lg:text-9xl' >
-    Welcome to <span className='text-green-500'> campus space...</span> </h1>
+     <div id='item' className='relative justify-center w-screen'>
+  <div>
+    <img src={campusSpace} className='items-center object-cover w-[100%]' />
+    <div id='left-text' className='absolute top-1/2 left-0 p-10 border backdrop-blur card rounded-lg shadow-md bg-black opacity-80'>
+      <h1 className='font-bold md:text-xl lg:text-2xl'>
+        <span className='text-green-500 text-4xl '> Campus space</span>  is a cutting-edge solution tailored for institutions to streamline the management of their classrooms. It empowers both students and teachers with the tools they need to effortlessly check room availability, ensuring that vacant rooms are efficiently utilized.
+      </h1>
+      
     </div>
-
-    <div  id='item' className='relative flex items-center justify-center'>
-        <div> <img src={campusSpace}  className='items-center object-cover w-[100%]' /></div> 
- </div>
-
-
- <div id='#body' className='m-5 md:m-9 lg:m-14 flex flex-col items-center '>
+  </div>
+</div>  
+ 
+ {/* <div id='#body' className='m-5 md:m-9 lg:m-14 flex flex-col items-center '>
 
        {
         content.map(({para}) => (
@@ -119,7 +97,7 @@ const LandingPage = () => {
 
       
    
-      </div> 
+      </div>  */}
        </div>
         
  
