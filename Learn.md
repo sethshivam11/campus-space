@@ -22,7 +22,10 @@ Campus Space is a MERN stack project with TypeScript & Tailwind CSS. Admins mana
 
 ## Tech Stack
 
-- MERN Stack
+- MongoDB
+- Express
+- React
+- Node. js
 - Tailwind CSS
 - TypeScript
 
@@ -142,10 +145,6 @@ To run this project, you will need to add the following environment variables to
 
 ### 2. You can get all the details about vacant rooms, Your timetable, Teachers absent, list of classes available at a particular period of time
 ![image](https://github.com/debangi29/campus-space/assets/117537653/9ae254e3-98a3-4494-b258-989f9e19c006)
-
-<br>
-
-![image](https://github.com/debangi29/campus-space/assets/117537653/8475b490-0159-4e28-b052-92d749526227)
 
 
 ### 3. There are more features and various ways to connect.
