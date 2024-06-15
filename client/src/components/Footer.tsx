@@ -76,7 +76,7 @@ function Footer() {
                         href={twitterLink ? twitterLink : "https://x.com/sethshivam11"}
                         className="flex flex-row items-center justify-center gap-2"
                     >
-                        <img src="/twitter.svg" alt="Twitter" className="w-8 h-8" />
+                        <img src="/twitter.svg" alt="Twitter" className="w-5 h-5" />
                         Twitter
                     </a>
                 </li>
