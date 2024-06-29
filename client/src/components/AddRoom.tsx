@@ -242,8 +242,8 @@ function AddRoom() {
               return (
                 <TableRow key={index}>
                   <TableCell>{room.roomNumber}</TableCell>
-                  <TableCell>{room.capacity}</TableCell>
                   <TableCell>{room.location}</TableCell>
+                  <TableCell>{room.capacity}</TableCell>
                   <TableCell className="flex gap-2">
                   <EditTeamModal TeamInfo={room} />
                     <AlertDialog>
