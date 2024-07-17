@@ -19,6 +19,7 @@ function TeachersAbsent() {
 
   return (
     <section className="min-h-screen min-w-screen">
+      <script src="//code.tidio.co/fdylvmddtyb7vzsk5frdt3ncrk6cwobs.js" async></script>
       <Card className="md:w-3/5 w-5/6 mx-auto dark:bg-zinc-900 bg-gray-200 my-6 select-none">
         <CardHeader>
           <CardTitle className="text-2xl text-center">

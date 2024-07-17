@@ -53,6 +53,7 @@ function Timetable() {
 
   return (
     <section className="min-h-screen min-w-screen">
+      <script src="//code.tidio.co/fdylvmddtyb7vzsk5frdt3ncrk6cwobs.js" async></script>
       <form onSubmit={handleSubmit}>
         <Card className="w-4/5 md:w-3/5 mx-auto my-6 bg-zinc-100 dark:bg-card">
           <CardHeader>

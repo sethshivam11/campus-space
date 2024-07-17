@@ -75,6 +75,7 @@ function TeacherRegister() {
   }
   return (
     <section className="min-h-screen min-w-screen">
+      <script src="//code.tidio.co/fdylvmddtyb7vzsk5frdt3ncrk6cwobs.js" async></script>
       <form onSubmit={handleSubmit}>
         <Card className="lg:w-2/5 sm:w-3/5 w-4/5 mx-auto dark:bg-card bg-zinc-100 mt-8">
           <CardHeader>
