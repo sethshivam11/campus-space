@@ -40,6 +40,7 @@ export function VacantRooms() {
   return (
     <section className="min-h-screen">
       <h1 className="text-3xl text-center my-6">Vacant rooms</h1>
+      <script src="//code.tidio.co/fdylvmddtyb7vzsk5frdt3ncrk6cwobs.js" async></script>
       <p className="text-gray-600 dark:text-gray-300 mx-auto md:w-3/5 w-4/5 mb-3 flex gap-2 items-center justify-start">
         Classes available at:
         <Select
