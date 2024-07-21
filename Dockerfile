@@ -36,7 +36,7 @@ RUN npm install --only=production
 # Add environment variables
 ENV NODE_ENV=production
 ENV PORT=5000
-
+ENV ACCESS_TOKEN_SECRET="YOUR_SECRET_TOKEN"
 # Add MongoDB URL environment variable
 ENV MONGODB_URI="Your mongodb url"
 

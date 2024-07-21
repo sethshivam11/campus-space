@@ -1,11 +1,12 @@
 <a name="top"></a>
+
 <center>
 <img src = "https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=F7F7F7&random=false&width=435&lines=Campus+Space"> 
 </center>
 
 Campus Space is a MERN stack project with TypeScript & Tailwind CSS. Admins manage timetables, teacher absences, & rooms. Students & teachers view timetables, vacant rooms, & teacher absences. Teachers can book rooms for classes. Efficient college resource management.
 
-## 🏅 Featured in 
+## 🏅 Featured in
 
 <p align="center">
   <img src="./image.png">
@@ -36,18 +37,36 @@ Start the server
 ```bash
   npm run start
 ```
+
+### Run Locally (Using docker)
+
+1. Go to client and run the following command:
+
+```bash
+docker build -t your-app-name .
+docker run -p 80:80 my-frontend-app
+
+```
+
+2. Go to root folder and run the following command:
+
+```bash
+docker build -t your-app-name .
+docker run -it -p 5000:5000 --name your-container-name -e MONGODB_URI="your mongodb url" -e ACCESS_TOKEN_SECRET="YOUR_SECRET_TOKEN" your-app-name
+```
+
 ## <h2> 🔄 Tech Stack </h2>
 
 1. <b>**Backend:-**</b>
-  <!-- Node.js -->
-<img src="https://img.shields.io/badge/node.js-339933.svg?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js logo">
+     <!-- Node.js -->
+   <img src="https://img.shields.io/badge/node.js-339933.svg?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js logo">
 
 <!-- Express.js -->
 <img src="https://img.shields.io/badge/express.js-000000.svg?style=for-the-badge&logo=express&logoColor=white" alt="Express.js logo">
 
 2. <b> **Frontend:** </b>
-   <!-- React -->
-<img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React logo">
+      <!-- React -->
+   <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React logo">
 
 <!-- React.js -->
 <img src="https://img.shields.io/badge/react.js-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React.js logo">
@@ -55,12 +74,12 @@ Start the server
 <!-- Tailwind CSS -->
 <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS logo">
 
+3. <b> **Database\*** </b>
+     <!-- MongoDB -->
+   <img src="https://img.shields.io/badge/mongodb-%2347A248.svg?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB logo">
 
-3. <b> **Database*** </b>  
-  <!-- MongoDB -->
-<img src="https://img.shields.io/badge/mongodb-%2347A248.svg?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB logo">
+4.<b> **Full Stack Integration** </b>
 
-4.<b> **Full Stack Integration** </b>   
   <!-- MERN Stack -->
 <img src="https://img.shields.io/badge/mernstack-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="MERN Stack logo">
 
@@ -76,7 +95,7 @@ To run this project, you will need to add the following environment variables to
 
 `NODE_ENV`
 
-* [Click Here](https://github.com/sethshivam11/campus-space/blob/master/.env.sample) for Server Side .env.sample file.
+- [Click Here](https://github.com/sethshivam11/campus-space/blob/master/.env.sample) for Server Side .env.sample file.
 
 > If you want to change the name of the college, image or footer links edit the env.production file in the client folder
 
@@ -86,8 +105,7 @@ To run this project, you will need to add the following environment variables to
 `VITE_LINKEDIN`
 `VITE_LOGO`
 
-* [Click Here](https://github.com/sethshivam11/campus-space/blob/master/client/.env.sample) for Client Side .env.sample file.
-
+- [Click Here](https://github.com/sethshivam11/campus-space/blob/master/client/.env.sample) for Client Side .env.sample file.
 
 <hr>
 
@@ -99,4 +117,5 @@ To run this project, you will need to add the following environment variables to
 ![Contributors](https://contrib.rocks/image?repo=sethshivam11/campus-space)
 
 ### Show some ❤️ by starring this awesome repository!
+
 <p align="right"><a href="#top">Back to top</a></p>
