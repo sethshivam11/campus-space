@@ -123,7 +123,7 @@ export default function EditTeamForm({ TeamInfo, setOpen }: Props) {
         >
           Cancel
         </Button>
-        <Button type="submit">Submit</Button>
+        <Button className="ml-2" type="submit">Submit</Button>
       </form>
     </Form>
   );
