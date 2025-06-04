@@ -86,7 +86,7 @@ function Footer() {
                     <Copyright /> All Rights Reserved.
                 </span>
                 <span className="flex flex-row items-center justify-start gap-2 sm:pt-2 pl-8 sm:pl-0">
-                    Developer: <a href="https://shivam.cyclic.app">Shivam Soni</a>
+                    Developer: <a href="https://sethshivam11.vercel.app">Shivam Soni</a>
                 </span>
             </p>
         </footer>
